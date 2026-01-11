@@ -1,392 +1,341 @@
-:root {
-    --primary-color: #512da8;
-    --primary-light: #8559da;
-    --primary-dark: #140078;
-    --secondary-color: #ff4081;
-    --light-color: #f5f5f5;
-    --dark-color: #333;
-    --gray-color: #757575;
-    --error-color: #f44336;
-    --success-color: #4caf50;
-    --warning-color: #ff9800;
-}
-
-* {
-    box-sizing: border-box;
+/* Ensure the browser allows the content to fill the screen */
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: var(--light-color);
-    color: var(--dark-color);
-    line-height: 1.6;
-}
+/* --- SHARED DEFAULTS --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
-.container {
-    position: relative;
-    width: 768px;
-    max-width: 100%;
-    min-height: 480px;
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.1);
-}
+/* --- HOME PAGE LAYOUT (.home-layout) --- */
+.home-layout { background-color: #f4f7fc; color: #333; }
 
-.form-container {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    transition: all 0.6s ease-in-out;
+.home-layout .sidebar {
+    position: fixed; left: 0; top: 0; width: 220px; height: 100%;
+    background-color: #4B3FBD; color: #fff; padding-top: 30px;
 }
+/* ... Move all your sidebar/topbar code here, starting each line with .home-layout ... */
+.home-layout .topbar { margin-left: 220px; background-color: #fff; /* etc */ }
 
-.sign-in-container {
-    left: 0;
-    width: 50%;
-    z-index: 2;
-}
 
-.sign-up-container {
-    left: 0;
-    width: 50%;
-    opacity: 0;
-    z-index: 1;
-}
+/* --- ALL PAGE LAYOUT --- */
 
-.container.right-panel-active .sign-in-container {
-    transform: translateX(100%);
-}
-
-.container.right-panel-active .sign-up-container {
-    transform: translateX(100%);
-    opacity: 1;
-    z-index: 5;
-    animation: show 0.6s;
-}
-
-@keyframes show {
-    0%, 49.99% {
-        opacity: 0;
-        z-index: 1;
-    }
-    50%, 100% {
-        opacity: 1;
-        z-index: 5;
-    }
-}
-
-.overlay-container {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 50%;
-    height: 100%;
-    overflow: hidden;
-    transition: transform 0.6s ease-in-out;
-    z-index: 100;
-}
-
-.container.right-panel-active .overlay-container {
-    transform: translateX(-100%);
-}
-
-.overlay {
-    background: linear-gradient(to right, var(--primary-light), var(--primary-color)) no-repeat 0 0 / cover;
-    color: #fff;
-    position: relative;
-    left: -100%;
-    height: 100%;
-    width: 200%;
-    transform: translateX(0);
-    transition: transform 0.6s ease-in-out;
-}
-
-.container.right-panel-active .overlay {
-    transform: translateX(50%);
-}
-
-.overlay-panel {
-    position: absolute;
-    top: 0;
+/* 1. page layout*/
+.page-layout {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0 40px;
-    height: 100%;
-    width: 50%;
-    text-align: center;
-    transform: translateX(0);
-    transition: transform 0.6s ease-in-out;
-}
-
-.overlay-left {
-    transform: translateX(-20%);
-}
-
-.container.right-panel-active .overlay-left {
-    transform: translateX(0);
-}
-
-.overlay-right {
-    right: 0;
-    transform: translateX(0);
-}
-
-.container.right-panel-active .overlay-right {
-    transform: translateX(20%);
-}
-
-h1 {
-    font-weight: 700;
+    min-height: 100vh; /* Minimum height is the full screen */
+    width: 100%;
     margin: 0;
-    font-size: 2.2rem;
 }
 
-p {
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 20px;
-    letter-spacing: 0.5px;
-    margin: 20px 0 30px;
+body {
+    margin: 0;
+    padding: 20px 50px; /* 20px gap at top, 50px on the sides */
+    background: radial-gradient(circle at top right, #2b2e4a, #1a1c2c); /* Deep Navy */
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
-span {
-    font-size: 12px;
-    color: var(--gray-color);
-    margin: 10px 0;
-}
-
-a {
-    color: var(--secondary-color);
-    font-size: 14px;
-    text-decoration: none;
-    margin: 15px 0;
-    cursor: pointer;
-}
-
-button {
-    border-radius: 20px;
-    border: 1px solid var(--primary-color);
-    background: var(--primary-color);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 12px 45px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: transform 80ms ease-in, background 0.3s ease;
-    cursor: pointer;
-}
-
-button:active {
-    transform: scale(0.95);
-}
-
-button:focus {
-    outline: none;
-}
-
-button.ghost {
-    background: transparent;
-    border-color: #fff;
-}
-
-button:hover {
-    background: var(--primary-dark);
-}
-
-form {
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    padding: 0 50px;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-}
-
-input {
-    background: #eee;
-    border: none;
-    padding: 12px 15px;
-    margin: 8px 0;
-    width: 100%;
-    border-radius: 5px;
-    font-family: inherit;
-}
-
-input:focus {
-    outline: 2px solid var(--primary-light);
-}
-
-.social-container {
-    margin: 20px 0;
-}
-
-.social-container a {
-    border: 1px solid #ddd;
-    border-radius: 50%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 5px;
-    height: 40px;
-    width: 40px;
-    color: var(--dark-color);
-    transition: all 0.3s ease;
-}
-
-.social-container a:hover {
-    background: var(--primary-color);
-    color: #fff;
-    border-color: var(--primary-color);
-}
-
-.password-container {
-    position: relative;
-    width: 100%;
-}
-
-.toggle-password {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: var(--gray-color);
-}
-
-.password-strength-meter {
-    width: 100%;
-    margin: 5px 0 15px;
-}
-
-.strength-bar {
-    height: 5px;
-    background: #ddd;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-bottom: 5px;
-}
-
-.strength-bar::after {
-    content: '';
-    display: block;
-    height: 100%;
-    width: 0;
-    background: var(--error-color);
-    transition: width 0.3s ease, background 0.3s ease;
-}
-
-.strength-labels {
+/* 2. Style the Nav Bar */
+.header-section {
+    background: rgba(164, 161, 210, 0.952);
+    backdrop-filter: blur(15px);
+    border-radius: 50px; /* Makes the whole menu bar a pill */
     display: flex;
     justify-content: space-between;
-    font-size: 10px;
-    color: var(--gray-color);
+    align-items: center;
+    padding: 15px 40px;
+    margin-bottom: 30px; /* Space between Nav and Table Area */
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.remember-me {
+.nav-left {
+    display: flex;
+    gap: 40px; /* Increased space between Home, Services, etc. */
+   
+}
+
+/* Styling navbar menus  */
+/* Remove underline from all links */
+.nav-link, .logout-link {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: large;
+    letter-spacing: 0.5px;
+    transition: 0.3s ease;
+    color: rgb(43, 40, 40); /* Soft red */
+}
+
+
+/* Home Link Hover */
+.nav-link:hover {
+    color: #032646;
+}
+
+/* Right side spacing */
+.nav-right {
     display: flex;
     align-items: center;
-    width: 100%;
-    margin: 10px 0;
-    font-size: 14px;
+    /* This creates the margin/space between username and logout */
+    gap: 40px; 
 }
 
-.remember-me input {
-    width: auto;
-    margin-right: 10px;
-}
-
-/* Modal Styles */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
+.user-display {
+    color: rgb(43, 40, 40);
+    display: flex;
     align-items: center;
+    font-size: large;
+    
 }
 
-.modal-content {
-    background: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 400px;
-    position: relative;
+.icon{
+    font-size: 20px;
 }
 
-.close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 24px;
-    color: var(--gray-color);
+.nav-divider {
+   color: rgb(43, 40, 40); /* Subtle white color so it's not too bright */
+    font-weight: 300; /* Thin look */
+    font-size: 18px;
+    user-select: none; /* Prevents user from highlighting the bar */
+}
+
+
+/* Logout as a plain word */
+.logout-link {
+    background: none;
+    border: none;
+    padding: 0;
     cursor: pointer;
 }
 
-/* Notification */
-.notification {
-    position: fixed;
-    top: 20px;
-    right: 20px;
+.logout-link:hover {
+    color: #032646;
+    text-shadow: 0 0 10px rgba(255, 75, 43, 0.3);
+}
+
+/* Icon style to ensure no underline on symbols */
+.icon {
+    text-decoration: none !important;
+    margin: 0 5px;
+}
+
+/* Styling the h2 INSIDE the header-section */
+.header-section h2 {
+    color: rgba(7, 3, 63, 0.952);      /* Change text color */
+    font-size: 30px;     /* Change size */
+    margin: 0;           /* Remove default browser margins */
+    font-weight: 600;    /* Adjust boldness */
+    text-transform: uppercase; /* Optional: make it all caps */
+}
+
+/* Div 2: White space with Button */
+.action-section {
+    padding: 20px 50px;
+    display: flex;
+    justify-content: flex-end; /* Right alignment */
+}
+
+/* 3. The Register Button */
+.reg-btn{
+    background: linear-gradient(45deg, #bc13fe, #7a00ff);
+    color: rgb(247, 245, 245);
+    border: none;
+    padding: 20px 50px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: medium;
+    box-shadow: 0 4px 15px rgba(188, 19, 254, 0.4);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.reg-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 210, 255, 0.6);
+    background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+}
+
+/* 4. The Table Area */
+.table-section {
+    flex-grow: 1;
+    padding: 40px;
+    background-size: cover;
+}
+
+.table-container {
+    background: rgba(164, 161, 210, 0.952);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure the table allows spacing between rows */
+table {
+    width: 100%;
+    border-collapse: separate; /* Required to see space between records */
+    border-spacing: 0 15px;    /* Adds 15px gap between each record */
+    background: transparent;
+}
+
+/* Style for the whole record (The Row) */
+.cell-record-row {
+    background: rgba(224, 231, 237, 0.05); /* Very subtle "glass" start */
+    backdrop-filter: blur(10px);
+    border-radius: 50px; /* Fully rounded ends for the record */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px rgba(175, 194, 215, 0.1);
+}
+
+/* Watery Hover Effect for the entire record */
+.cell-record-row:hover {
+    background: rgba(175, 194, 215, 0.1); /* Light watery blue tint */
+    backdrop-filter: blur(35px);      /* Deepens the water effect */
+    transform: scale(1.01);            /* Subtle "pop" toward the user */
+    box-shadow: 0 8px 25px rgba(14, 17, 20, 0.1); /* Cyan glow */
+}
+
+/* Styling internal cells so they don't break the row shape */
+.cell-record-row td {
     padding: 15px 25px;
-    border-radius: 5px;
-    color: white;
-    font-weight: 500;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transform: translateX(150%);
-    transition: transform 0.3s ease;
-    z-index: 1000;
+    color: rgb(43, 40, 40);
+    font-size: 15px;
+    border: none;
+    font-weight: bold;
 }
 
-.notification.show {
-    transform: translateX(0);
+/* Rounded corners for the start and end of each record */
+.cell-record-row td:first-child {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.cell-record-row td:last-child {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
-.notification.success {
-    background-color: var(--success-color);
+table {
+    width: 100%;
+    border-collapse: separate;
+    background: transparent; /* Essential for watery look */
+    border-spacing: 0 10px;
 }
 
-.notification.error {
-    background-color: var(--error-color);
+th {
+    color: #000000; /* Cyan headers look great against dark blue */
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
 }
 
-.notification.warning {
-    background-color: var(--warning-color);
+td {
+    padding: 15px;
+    color: rgb(0, 0, 0);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;      /* Horizontal centering */
+    vertical-align: middle;
+    font-size: large;
+
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .container {
-        width: 100%;
-        height: 100vh;
-        border-radius: 0;
-    }
-
-    .sign-in-container,
-    .sign-up-container {
-        width: 100%;
-    }
-
-    .overlay-container {
-        display: none;
-    }
-
-    .container.right-panel-active .sign-in-container,
-    .container.right-panel-active .sign-up-container {
-        transform: translateX(0);
-    }
+/* 5. Styling the Select Dropdown */
+.drop-down{
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent */
+    backdrop-filter: blur(10px); /* iOS glass effect */
+    color: rgb(8, 8, 8);
+    padding: 8px 15px;
+    border-radius: 20px; /* Pill shape matching your buttons */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    appearance: none; /* Removes the default browser arrow */
+    
+    /* Custom White Arrow */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg%20xmlns%3D"http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg"%20width%3D"292.4"%20height%3D"292.4"><path%20fill%3D"white"%20d%3D"M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z"%2F><%2Fsvg>');
+    background-repeat: no-repeat;
+    background-position: right 12px top 50%;
+    background-size: 10px auto;
+    padding-right: 35px;
 }
+
+.drop-down:disabled {
+    background: rgba(255, 255, 255, 0.05); /* Darker glass effect */
+    color: rgba(15, 15, 15, 0.8);      /* Keep text bright enough to read */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: not-allowed;                  /* Shows a 'block' icon on hover */
+    opacity: 1;                           /* Prevents browser from making it too faint */
+    appearance: none;                     /* Optionally hide the arrow if you want it to look like a pill */
+}
+
+/* Optional: remove the dropdown arrow for a cleaner 'label' look when disabled */
+.drop-down:disabled {
+    background-image: none; 
+    padding-right: 20px; 
+}
+
+/* Change dropdown look when the whole record is hovered */
+.cell-record-row:hover .drop-down {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(33, 34, 34, 0.5);
+}
+
+/* Styling the options inside (limited browser support for glass effect here) */
+.drop-down option {
+    background-color: #ece3e3; /* Matches a dark theme background */
+    color: rgb(14, 13, 13);
+}
+
+/* 6. Styling the Action Buttons inside the record */
+
+.view-btn {
+    background: #15a944;
+    color: rgb(251, 251, 251);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: 0.3s;
+}
+
+.upt-btn {
+    background: #cf7106;
+    color: rgb(251, 251, 251);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: 0.3s;
+}
+
+.del-btn {
+    background: #c70303;
+    color: rgb(251, 251, 251);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: 0.3s;
+}
+
+.btn-action:hover {
+    background: #ffffff;
+    color: #4B3FBD;
+}
+

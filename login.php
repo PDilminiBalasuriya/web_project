@@ -1,6 +1,38 @@
 <?php
 session_start();
+include "config.php";
+
+if (isset($_POST['login'])) {
+
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $sql = "
+    SELECT users.username, roles.Role_Name
+    FROM users
+    INNER JOIN roles ON users.role_id = roles.role_id
+    WHERE users.username='$username' AND users.password='$password'
+    ";
+
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) == 1) {
+
+        $row = mysqli_fetch_assoc($result);
+
+        $_SESSION['username'] = $row['username'];
+        $_SESSION['role'] = $row['Role_Name'];
+
+        header("Location: pages/home.php");
+        exit();
+
+    } else {
+        $error = "Invalid login!";
+    }
+}
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,15 +42,15 @@ session_start();
     <title>Event Management - Login</title>
 
     <!-- Local CSS (no external libraries for your assignment) -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style1.css">
 </head>
 <body>
 
     <div class="container" id="container">
 
-        <!-- ================= SIGN UP FORM ================= -->
+        <!-- ================= SIGN UP FORM =================
         <div class="form-container sign-up-container">
-            <form action="register_process.php" method="POST">
+            <form action="login.php" method="POST">
                 <h1>Create Account</h1>
 
                 <span>Use your email for registration</span>
@@ -27,34 +59,40 @@ session_start();
                 <input type="email" name="email" placeholder="Email" required>
 
                 <div class="password-container">
-                    <input type="password" name="password" id="regPassword" placeholder="Password" required>
+                    <input type="password" name="password" id="password" placeholder="Password" required>
                     <i class="toggle-password" onclick="togglePassword('regPassword', this)">👁</i>
                 </div>
 
                 <button type="submit">Sign Up</button>
             </form>
-        </div>
+        </div> -->
 
         <!-- ================= SIGN IN FORM ================= -->
         <div class="form-container sign-in-container">
-            <form action="login_process.php" method="POST">
+            <form action="login.php" method="POST">
                 <h1>Sign in</h1>
 
-                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="username" placeholder="Enter your name here" required>
 
                 <div class="password-container">
-                    <input type="password" name="password" id="loginPassword" placeholder="Password" required>
+                    <input type="password" name="password" id="loginPassword" placeholder="Enter your password here" required>
                     <i class="toggle-password" onclick="togglePassword('loginPassword', this)">👁</i>
                 </div>
 
-                <a href="#" id="forgotPassword">Forgot your password?</a>
+                <!-- <a href="#" id="forgotPassword">Forgot your password?</a> -->
 
-                <div class="remember-me">
+                <!-- <div class="remember-me">
                     <input type="checkbox" name="remember" id="rememberMe">
                     <label for="rememberMe">Remember me</label>
-                </div>
+                </div> -->
 
-                <button type="submit">Sign In</button>
+                <?php
+                if(isset($error)){
+                    echo "<p style='color:red; text-align:center;'>$error</p>";
+                }
+                ?>
+                <button type="submit" name="login">Sign In</button>
+            
             </form>
         </div>
 
@@ -71,7 +109,7 @@ session_start();
                 <div class="overlay-panel overlay-right">
                     <h1>Welcome Back!</h1>
                     <p>Login with your personal info to stay connected</p>
-                    <button class="ghost" id="signUp">Sign Up</button>
+                    <!-- <button class="ghost" id="signUp">Sign Up</button> -->
                 </div>
 
             </div>
@@ -80,7 +118,7 @@ session_start();
     </div>
 
     <!-- ============= FORGOT PASSWORD MODAL ============= -->
-    <div class="modal" id="forgotPasswordModal">
+    <!-- <div class="modal" id="forgotPasswordModal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Reset Password</h2>
@@ -91,7 +129,7 @@ session_start();
                 <button type="submit">Send Reset Link</button>
             </form>
         </div>
-    </div>
+    </div> -->
 
     <!-- Notifications -->
     <div class="notification" id="notification"></div>
