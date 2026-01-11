@@ -64,7 +64,9 @@ while ($row = $roles_result->fetch_assoc()) {
     <!-- Registration Button -->
     <div class="action-section">
         <div class="button-wrapper">
-            <button class="reg-btn" onclick="location.href='register.php'">Register New User</button>
+            <a href="users/createUser.php" style="text-decoration: none;">
+                <button class="reg-btn" onclick="location.href='register.php'">Register New User</button>
+            </a>            
         </div>
     </div>
 
@@ -117,7 +119,7 @@ while ($row = $roles_result->fetch_assoc()) {
     </div>
 
 
-<script>
+<!-- <script>
 // Change role via AJAX
 function updateRole(userId, roleId) {
     if(confirm('Change user role?')) {
@@ -144,7 +146,7 @@ function deleteUser(userId) {
         window.location.href = 'delete_user.php?id=' + userId;
     }
 }
-</script>
+</script> -->
 
 </body>
 </html>
