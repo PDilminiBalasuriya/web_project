@@ -16,12 +16,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = $_POST['password'];
         $confirm  = $_POST['confirm_password'];
 
-        if ($password !== $confirm) {
+        // --- CHARACTER VALIDATIONS ---
+        if (strlen($username) < 4) {
+            echo "<script>alert('Username must be at least 4 characters long!'); window.history.back();</script>";
+            exit();
+        }
+        elseif (strlen($password) < 8) {
+            echo "<script>alert('Password must be at least 8 characters long!'); window.history.back();</script>";
+            exit();
+        }
+        elseif ($password !== $confirm) {
             echo "<script>alert('Passwords do not match!'); window.history.back();</script>";
             exit();
         }
 
-        // ... Proceed to hash and insert into database
+        // ... Password convert to hash and insert into database
         $hashed_pass = password_hash($password, PASSWORD_DEFAULT);
         $sql = "INSERT INTO users (username, password, Role_Id) VALUES ('$username', '$hashed_pass', '$role_id')";
         
@@ -73,12 +82,12 @@ if ($role_result && mysqli_num_rows($role_result) > 0) {
             <form action="" method="POST">
                 <div class="input-group">
                     <label>Username</label>
-                    <input type="text" name="username" placeholder="Enter username" required>
+                    <input type="text" name="username" id="username" placeholder="Min 4 characters" required>
                 </div>
 
                 <div class="input-group">
                     <label>Password</label>
-                    <input type="password" name="password" id="pass" placeholder="Enter password" required>
+                    <input type="password" name="password" id="pass" placeholder="Min 8 characters" required>
                 </div>
 
                 <div class="input-group">
@@ -88,36 +97,56 @@ if ($role_result && mysqli_num_rows($role_result) > 0) {
 
                 <div class="input-group">
                     <label>Assign Role</label>
-                        <select name="role_id" class="drop-down-active" required>
-                            <option value="" disabled selected>-- Select a Role --</option>
-    
-                            <?php 
-                            if (!empty($roles_list)) {
-                                foreach ($roles_list as $role) {
-                                    echo '<option value="' . $role['role_id'] . '">' . htmlspecialchars($role['role_name']) . '</option>';
-                                }
+                    <select name="role_id" class="drop-down-active" required>
+                        <option value="" disabled selected>-- Select a Role --</option>
+                        <?php 
+                        if (!empty($roles_list)) {
+                            foreach ($roles_list as $role) {
+                                echo '<option value="' . $role['role_id'] . '">' . htmlspecialchars($role['role_name']) . '</option>';
                             }
-                            ?>
-                        </select>
+                        }
+                        ?>
+                    </select>
                 </div>
-
-                <button type="submit" class="submit-btn">CREATE AN USER</button>
+                <div class="button-row">
+                    <button type="submit" class="submit-btn">Create an User</button>
+                    <button type="button" class="submit-btn close-btn" onclick="location.href='../admin.php'" >Close</button>
+                </div>
             </form>
         </div>
     </main>
 
 
     <script>
+<script>
     document.querySelector('form').onsubmit = function(e) {
-    var pass = document.getElementById('pass').value;
-    var confirm = document.getElementById('confirm_pass').value;
+        var username = document.getElementById('username').value;
+        var pass = document.getElementById('pass').value;
+        var confirm = document.getElementById('confirm_pass').value;
 
-    if (pass !== confirm) {
-        alert("Passwords do not match!");
-        e.preventDefault(); // Stops the form from submitting
-        return false;
-    }
-};</script>
+        // Username validation
+        if (username.length < 4) {
+            alert("Username must be at least 4 characters long!");
+            e.preventDefault();
+            return false;
+        }
+
+        // Password length validation
+        if (pass.length < 8) {
+            alert("Password must be at least 8 characters long!");
+            e.preventDefault();
+            return false;
+        }
+
+        // Matching validation
+        if (pass !== confirm) {
+            alert("Passwords do not match!");
+            e.preventDefault();
+            return false;
+        }
+    };
+    </script>
+</script>
 
 </body>
 </html>

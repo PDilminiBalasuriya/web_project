@@ -65,7 +65,7 @@ while ($row = $roles_result->fetch_assoc()) {
     <div class="action-section">
         <div class="button-wrapper">
             <a href="users/createUser.php" style="text-decoration: none;">
-                <button class="reg-btn" onclick="location.href='register.php'">Register New User</button>
+                <button class="reg-btn" onclick="location.href='users/createUser.php'">Register New User</button>
             </a>            
         </div>
     </div>
@@ -77,7 +77,7 @@ while ($row = $roles_result->fetch_assoc()) {
                 <thead>
                     <tr>
                         <th>Username</th>
-                        <th>Password</th>
+                        <!-- <th>Password</th> -->
                         <th>Role</th>
                         <th>Actions</th>
                     </tr>
@@ -90,7 +90,7 @@ while ($row = $roles_result->fetch_assoc()) {
                     ?>
                 <tr class="cell-record-row">
                     <td><?php echo isset($user['username']) ? htmlspecialchars($user['username']) : ''; ?></td>
-                    <td><?php echo isset($user['password']) ? htmlspecialchars($user['password']) : ''; ?></td>
+                    <!-- <td><?php echo isset($user['password']) ? htmlspecialchars($user['password']) : ''; ?></td> -->
                 <td>
                     <select class="drop-down" disabled onchange="updateRole(<?php echo $user['id']; ?>, this.value)">
                     <!-- Default option for users without role -->
@@ -107,9 +107,9 @@ while ($row = $roles_result->fetch_assoc()) {
                     </select>
                 </td>
                 <td>
-                <button class="view-btn" onclick="viewUser(<?php echo $user['id']; ?>)">View</button>
-                <button class="upt-btn" onclick="updateUser(<?php echo $user['id']; ?>)">Update</button>
-                <button class="del-btn" onclick="deleteUser(<?php echo $user['id']; ?>)">Delete</button>
+                <button class="view-btn" onclick="location.href='users/viewUser.php?id=<?php echo $user['id']; ?>'">View</button>
+                <button class="upt-btn" onclick="location.href='users/updateUser.php?id=<?php echo $user['id']; ?>'">Update</button>
+                <button class="del-btn" onclick="location.href='users/deleteUser.php?id=<?php echo $user['id']; ?>'">Delete</button>
                 </td>
                 </tr>
                 <?php endwhile; ?>

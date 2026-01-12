@@ -310,6 +310,13 @@ td {
     transition: 0.3s;
 }
 
+/* View Button - Green Glow */
+.view-btn:hover {
+    background-color: #2ecc71 !important; /* Slightly lighter green */
+    transform: translateY(-2px); /* Lifts the button up */
+    box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4); /* Green glow */
+}
+
 .upt-btn {
     background: #cf7106;
     color: rgb(251, 251, 251);
@@ -322,6 +329,13 @@ td {
     transition: 0.3s;
 }
 
+/* Update Button - Orange Glow */
+.upt-btn:hover {
+    background-color: #f39c12 !important; /* Slightly lighter orange */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4); /* Orange glow */
+}
+
 .del-btn {
     background: #c70303;
     color: rgb(251, 251, 251);
@@ -332,6 +346,13 @@ td {
     cursor: pointer;
     margin-right: 5px;
     transition: 0.3s;
+}
+
+/* Delete Button - Red Glow */
+.del-btn:hover {
+    background-color: #e74c3c !important; /* Slightly lighter red */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4); /* Red glow */
 }
 
 .btn-action:hover {
@@ -353,7 +374,7 @@ td {
 
 /* 2. Setup the Glass Card */
 .glass-card {
-    background: #56abf038;
+    background: #83b7e238;
     backdrop-filter: blur(10px);
     border-radius: 30px;
     padding: 60px;
@@ -375,7 +396,7 @@ td {
     padding: 60px 40px;
     width: 90%;
     max-width: 800px; 
-    background: #56abf038;
+    background: linear-gradient(45deg, #6ebabd, #d0e995);
     backdrop-filter: blur(10px);
     border-radius: 30px;
 }
@@ -395,10 +416,15 @@ td {
 }
 
 .input-group label {
-    color: #f0f3f3; 
     font-weight: bold;
     margin-bottom: 8px;
     text-align: left;
+    display: block;
+    font-size: medium;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(59, 55, 55, 0.6);
+    margin-bottom: 8px;
 }
 
 .input-group input, 
@@ -409,22 +435,116 @@ td {
     border-radius: 50px; 
     color: rgb(14, 13, 13);
     outline: none;
+    font-size: medium;
 }
 
-/* 4. Restores your Purple Button */
+/* 4. Submit button styles*/
 .submit-btn {
     background:linear-gradient(45deg, #bc13fe, #7a00ff); 
     color: white;
-    padding: 15px;
+    padding: 20px;
     border: none;
     border-radius: 50px;
     font-weight: bold;
     cursor: pointer;
     margin-top: 10px;
     transition: 0.3s;
+    align-items: right;
+    font-size: medium;
 }
 
 .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 210, 255, 0.6);
     background: linear-gradient(45deg, #00d2ff, #3a7bd5);
-    box-shadow: 0 0 15px rgba(160, 32, 240, 0.6);
+}
+
+.button-row {
+    display: flex;
+    justify-content: flex-end; /* Pushes the button to the right */
+    width: 100%;
+    margin-top: 20px;
+    gap: 15px;
+    
+
+}
+
+
+
+
+
+/* ----------- All View Page */
+/* Container for the view data rows */
+.view-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Style for the labels to make them subtle */
+
+/* The actual data display box */
+.view-data {
+    padding: 12px 20px;
+    background: rgb(255, 252, 252);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px; 
+    color: rgb(14, 13, 13);
+    outline: none;
+    font-size: medium;
+    font-weight: 500;
+    min-height: 20px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Slight inner depth */
+    transition: all 0.3s ease;
+}
+
+.view-actions {
+    display: flex !important;
+    justify-content: space-between; /* Edit on left, Close on right */
+    align-items: center;
+    width: 100%;
+    margin-top: 1px;
+    
+}
+/* Highlight effect on hover */
+.view-data:hover {
+    background: rgba(241, 241, 241, 0.945);
+    border-color: #dee0e0; /* Glows cyan on hover */
+}
+
+/* Special styling for the User ID to make it look like a badge */
+.view-data-id {
+    display: inline-block;
+    color: #3c3f3f;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: large;
+}
+
+.button-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+/* Purple Gradient for Edit */
+.edit-btn {
+    background: linear-gradient(45deg, #bc13fe, #7a00ff); 
+    color: white;
+    padding: 20px 30px;
+}
+
+/* Red Gradient for Close */
+.close-btn {
+    background: rgba(190, 53, 53, 0.932); /* Semi-transparent red */
+    backdrop-filter: blur(5px); 
+    border: 1px solid rgba(255, 255, 255, 0.356);
+    padding: 20px 30px;
+ 
+}
+
+.close-btn:hover {
+    background: linear-gradient(45deg, #f50404, #b94646e3); 
+    border-color: #dee0e0; /* Glows cyan on hover */
 }
