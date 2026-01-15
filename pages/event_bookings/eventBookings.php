@@ -65,6 +65,9 @@ $result = $conn->query($sql);
 
 <div class="action-section">
     <div class="button-wrapper">
+        <button class="reg-btn" onclick="window.location.href='createBookingStatus.php'">
+            Add New Booking Status
+        </button>
         <button class="reg-btn" onclick="window.location.href='createEventBooking.php'">
             Create New Booking
         </button>
@@ -78,8 +81,8 @@ $result = $conn->query($sql);
                 <tr>
                     <th>Booking Code</th>
                     <th>Event Name</th>
-                    <th>Customer</th>
-                    <th>Ticket ID</th>
+                    <th>Customer Name</th>
+                    <th>Ticket Code</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -91,7 +94,8 @@ $result = $conn->query($sql);
                         <td><strong><?php echo htmlspecialchars($booking['Code']); ?></strong></td>
                         <td><?php echo htmlspecialchars(isset($booking['event_name']) ? $booking['event_name'] : 'N/A'); ?></td>
                         <td><?php echo htmlspecialchars(isset($booking['customer_name']) ? $booking['customer_name'] : 'N/A'); ?></td>
-                        <td><?php echo htmlspecialchars($booking['ticket_id']); ?></td>
+                        <td><?php echo htmlspecialchars($booking['ticket_code']); ?></td>
+                        <td><?php echo htmlspecialchars($booking['ticket_code']); ?></td>
                         <td>
                             <span class="status-badge">
                                 <td><?php echo htmlspecialchars(isset($booking['status_name']) ? $booking['status_name'] : 'N/A'); ?></td>

@@ -1,9 +1,8 @@
 <?php
 //session_start();
-require_once "auth.php";
-adminOnly(); // Make sure this function exists in auth.php
+require_once "../auth.php";
+require_once '../../config.php'; // your DB connection file
 
-require_once '../config.php'; // Database connection
 
 // Redirect if not logged in or not admin
 if (!isset($_SESSION['username']) || $_SESSION['role'] != 'Admin') {
@@ -15,7 +14,7 @@ $current_user = $_SESSION['username'];
 
 // Fetch all users with roles
 $sql = "
-    SELECT e.Id, e.Code, e.Title, e.Type_Id, e.Venue, e.City, e.Date, e.Start Time, e.End Time, e.Status_Id, s.Status Type, t.Type
+    SELECT e.Id, e.Code, e.Title, e.Type_Id, e.Venue, e.City, e.Date, e.Start_Time, e.End_Time, e.Status_Id, s.Status_Type, t.Type
     FROM event e
     LEFT JOIN event_type t ON e.Type_Id = t.Type_Id
     LEFT JOIN event_status s ON e.Status_Id = s.Status_Id
@@ -34,7 +33,7 @@ if (!$result) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel</title>
-<link rel="stylesheet" href="../css/style5.css">
+<link rel="stylesheet" href="../css/style.css">
 <style>
     body { font-family: Arial, sans-serif; }
     .header-section { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: #f2f2f2; }

@@ -44,29 +44,27 @@ body {font-size:16px;}
   <!-- ADMIN: sees everything -->
   <?php if ($role === 'admin') { ?>
     <a href="users/admin.php" class="w3-bar-item w3-button w3-hover-white">Admin</a>
-    <a href="event_bookings/events.php" class="w3-bar-item w3-button w3-hover-white">Events</a>
-    <a href="tickets.php" class="w3-bar-item w3-button w3-hover-white">Tickets</a>
-    <a href="register.php" class="w3-bar-item w3-button w3-hover-white">Register</a>
-    <a href="schedule.php" class="w3-bar-item w3-button w3-hover-white">Schedule</a>
-    <a href="schedule.php" class="w3-bar-item w3-button w3-hover-white">Booking</a>
-    <a href="schedule.php" class="w3-bar-item w3-button w3-hover-white">Customer</a>
-    <a href="help.php" class="w3-bar-item w3-button w3-hover-white">Help</a>
+    <a href="events/events.php" class="w3-bar-item w3-button w3-hover-white">Event</a>
+    <a href="events/events.php" class="w3-bar-item w3-button w3-hover-white">Ticket</a>
+    <a href="event_bookings/eventBookings.php" class="w3-bar-item w3-button w3-hover-white">Event Booking</a>
+    <a href="register.php" class="w3-bar-item w3-button w3-hover-white">Customer</a>
+    <a href="schedule.php" class="w3-bar-item w3-button w3-hover-white">Help</a>
+    
   <?php } ?>
 
     <!-- EVENT MANAGER -->
   <?php if ($role === 'event manager') { ?>
-    <a href="event_bookings/events.php" class="w3-bar-item w3-button w3-hover-white">Events</a>
-    <a href="tickets.php" class="w3-bar-item w3-button w3-hover-white">Tickets</a>
-    <a href="schedule.php" class="w3-bar-item w3-button w3-hover-white">Schedule</a>
-    <a href="schedule.php" class="w3-bar-item w3-button w3-hover-white">Booking</a>
-       <a href="schedule.php" class="w3-bar-item w3-button w3-hover-white">Customer</a>
+    <a href="events/events.php" class="w3-bar-item w3-button w3-hover-white">Event</a>
+    <a href="events/events.php" class="w3-bar-item w3-button w3-hover-white">Ticket</a>
+    <a href="event_bookings/eventBookings.php" class="w3-bar-item w3-button w3-hover-white">Event Booking</a>
+    <a href="schedule.php" class="w3-bar-item w3-button w3-hover-white">Customer</a>
     <a href="help.php" class="w3-bar-item w3-button w3-hover-white">Help</a>
   <?php } ?>
 
       <!-- EVENT ORGANIZER -->
   <?php if ($role === 'Event Organizer') { ?>
-    <a href="events.php" class="w3-bar-item w3-button w3-hover-white">Events</a>
-    <a href="schedule.php" class="w3-bar-item w3-button w3-hover-white">Schedule</a>
+    <a href="events.php" class="w3-bar-item w3-button w3-hover-white">Event</a>
+    <a href="event_bookings/eventBookings.php" class="w3-bar-item w3-button w3-hover-white">Event Booking</a>
     <a href="help.php" class="w3-bar-item w3-button w3-hover-white">Help</a>
   <?php } ?>
 
