@@ -1,0 +1,105 @@
+<?php
+// 1. Load the database connection first
+require_once '../../config.php'; 
+
+// 2. Load auth.php
+require_once '../auth.php'; 
+adminOnly();
+
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New User</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body class="create-user-page">
+
+    <header class="header-section">
+        <nav class="nav-left">
+            <a href="../admin.php" class="nav-link">
+                <span class="icon">&#8592;</span> BACK TO LIST
+            </a>
+        </nav>
+        <div class="nav-center"><h2>CREATE NEW USER</h2></div>
+        <div class="nav-right">
+            <span class="user-display"><span class="icon">&#128100;</span> Welcome, <strong><?php echo $_SESSION['username']; ?></strong></span>
+        </div>
+    </header>
+
+    <main class="form-wrapper">
+        <div class="glass-card">
+            <form action="" method="POST">
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" name="username" id="username" placeholder="Min 4 characters" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" name="password" id="pass" placeholder="Min 8 characters" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Confirm Your Password</label>
+                    <input type="password" name="confirm_password" id="confirm_pass" placeholder="Enter your password again" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Assign Role</label>
+                    <select name="role_id" class="drop-down-active" required>
+                        <option value="" disabled selected>-- Select a Role --</option>
+                        <?php 
+                        if (!empty($roles_list)) {
+                            foreach ($roles_list as $role) {
+                                echo '<option value="' . $role['role_id'] . '">' . htmlspecialchars($role['role_name']) . '</option>';
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="button-row">
+                    <button type="submit" class="submit-btn">Create an User</button>
+                    <button type="button" class="submit-btn close-btn" onclick="location.href='../admin.php'" >Close</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+
+    <script>
+<script>
+    document.querySelector('form').onsubmit = function(e) {
+        var username = document.getElementById('username').value;
+        var pass = document.getElementById('pass').value;
+        var confirm = document.getElementById('confirm_pass').value;
+
+        // Username validation
+        if (username.length < 4) {
+            alert("Username must be at least 4 characters long!");
+            e.preventDefault();
+            return false;
+        }
+
+        // Password length validation
+        if (pass.length < 8) {
+            alert("Password must be at least 8 characters long!");
+            e.preventDefault();
+            return false;
+        }
+
+        // Matching validation
+        if (pass !== confirm) {
+            alert("Passwords do not match!");
+            e.preventDefault();
+            return false;
+        }
+    };
+    </script>
+</script>
+
+</body>
+</html>
