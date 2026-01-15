@@ -1,11 +1,11 @@
 <?php
-require_once "auth.php";
+require_once "../auth.php";
 adminOnly();
-require_once '../config.php'; // your DB connection file
+require_once '../../config.php'; // your DB connection file
 
 // Redirect if not logged in
 if (!isset($_SESSION['username']) || $_SESSION['role'] != 'Admin') {
-    header("Location: ../login.php");
+    header("Location: ../../login.php");
     exit();
 }
 
@@ -35,14 +35,14 @@ while ($row = $roles_result->fetch_assoc()) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel</title>
-<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../../css/style.css">
 </head>
 
 <body class="page-layout">
 
 <header class="header-section">
     <nav class="nav-left">
-        <a href="home.php" class="nav-link active">
+        <a href="../home.php" class="nav-link active">
             <span class="icon">&#8962;</span> Home
         </a>
     </nav>
@@ -61,14 +61,13 @@ while ($row = $roles_result->fetch_assoc()) {
         </a>
     </div>
 </header>
-    <!-- Registration Button -->
-    <div class="action-section">
-        <div class="button-wrapper">
-            <a href="users/createUser.php" style="text-decoration: none;">
-                <button class="reg-btn" onclick="location.href='users/createUser.php'">Register New User</button>
-            </a>            
-        </div>
+    <!-- Registration Button & User Roles Button -->
+<div class="action-section">
+    <div class="button-wrapper">
+        <button class="reg-btn" onclick="location.href='createRoles.php'">Create New User Roles</button>
+        <button class="reg-btn" onclick="location.href='createUser.php'">Register New User</button>        
     </div>
+</div>
 
     <!-- Table View -->
     <div class="table-section">
@@ -90,12 +89,9 @@ while ($row = $roles_result->fetch_assoc()) {
                     ?>
                 <tr class="cell-record-row">
                     <td><?php echo isset($user['username']) ? htmlspecialchars($user['username']) : ''; ?></td>
-                    <!-- <td><?php echo isset($user['password']) ? htmlspecialchars($user['password']) : ''; ?></td> -->
+                
                 <td>
-                    <select class="drop-down" disabled onchange="updateRole(<?php echo $user['id']; ?>, this.value)">
-                    <!-- Default option for users without role -->
-                        <option value="0" <?php echo ($user_role_id == 0) ? 'selected' : ''; ?>>No Role</option>
-
+                    <select class="drop-down" disabled onchange="updateRole(<?php echo $user['id']; ?>, this.value)">                    
                     <!-- Populate roles -->
                             <?php foreach ($roles as $id => $role_name): ?>
                             <?php $id = intval($id); // ensure integer ?>
@@ -107,9 +103,9 @@ while ($row = $roles_result->fetch_assoc()) {
                     </select>
                 </td>
                 <td>
-                <button class="view-btn" onclick="location.href='users/viewUser.php?id=<?php echo $user['id']; ?>'">View</button>
-                <button class="upt-btn" onclick="location.href='users/updateUser.php?id=<?php echo $user['id']; ?>'">Update</button>
-                <button class="del-btn" onclick="location.href='users/deleteUser.php?id=<?php echo $user['id']; ?>'">Delete</button>
+                <button class="view-btn" onclick="location.href='viewUser.php?id=<?php echo $user['id']; ?>'">View</button>
+                <button class="upt-btn" onclick="location.href='updateUser.php?id=<?php echo $user['id']; ?>'">Update</button>
+                <button class="del-btn" onclick="location.href='deleteUser.php?id=<?php echo $user['id']; ?>'">Delete</button>
                 </td>
                 </tr>
                 <?php endwhile; ?>

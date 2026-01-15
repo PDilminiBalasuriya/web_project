@@ -135,9 +135,17 @@ body {
 .action-section {
     padding: 20px 50px;
     display: flex;
-    justify-content: flex-end; /* Right alignment */
+    
 }
 
+.button-wrapper {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    width: 100%;
+    padding: 10px 40px; 
+    box-sizing: border-box;
+}
 /* 3. The Register Button */
 .reg-btn{
     background: linear-gradient(45deg, #bc13fe, #7a00ff);
@@ -150,6 +158,8 @@ body {
     box-shadow: 0 4px 15px rgba(188, 19, 254, 0.4);
     cursor: pointer;
     transition: 0.3s;
+    text-decoration: none;   /* ✅ removes underline */
+   
 }
 
 .reg-btn:hover {
@@ -157,6 +167,7 @@ body {
     box-shadow: 0 6px 20px rgba(0, 210, 255, 0.6);
     background: linear-gradient(45deg, #00d2ff, #3a7bd5);
 }
+
 
 /* 4. The Table Area */
 .table-section {
@@ -315,6 +326,7 @@ td {
     background-color: #2ecc71 !important; /* Slightly lighter green */
     transform: translateY(-2px); /* Lifts the button up */
     box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4); /* Green glow */
+    padding: 8px 18px;
 }
 
 .upt-btn {
@@ -361,7 +373,7 @@ td {
 }
 
 
-/* ------------------- All Creation Page ----------------------- */
+/* ------------------- All CRUD operations page ----------------------- */
 
 /* 1. Centering the card on the page */
 .form-wrapper {

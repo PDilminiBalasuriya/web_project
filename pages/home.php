@@ -43,8 +43,8 @@ body {font-size:16px;}
 
   <!-- ADMIN: sees everything -->
   <?php if ($role === 'admin') { ?>
-    <a href="admin.php" class="w3-bar-item w3-button w3-hover-white">Admin</a>
-    <a href="events.php" class="w3-bar-item w3-button w3-hover-white">Events</a>
+    <a href="users/admin.php" class="w3-bar-item w3-button w3-hover-white">Admin</a>
+    <a href="event_bookings/events.php" class="w3-bar-item w3-button w3-hover-white">Events</a>
     <a href="tickets.php" class="w3-bar-item w3-button w3-hover-white">Tickets</a>
     <a href="register.php" class="w3-bar-item w3-button w3-hover-white">Register</a>
     <a href="schedule.php" class="w3-bar-item w3-button w3-hover-white">Schedule</a>
@@ -55,7 +55,7 @@ body {font-size:16px;}
 
     <!-- EVENT MANAGER -->
   <?php if ($role === 'event manager') { ?>
-    <a href="events.php" class="w3-bar-item w3-button w3-hover-white">Events</a>
+    <a href="event_bookings/events.php" class="w3-bar-item w3-button w3-hover-white">Events</a>
     <a href="tickets.php" class="w3-bar-item w3-button w3-hover-white">Tickets</a>
     <a href="schedule.php" class="w3-bar-item w3-button w3-hover-white">Schedule</a>
     <a href="schedule.php" class="w3-bar-item w3-button w3-hover-white">Booking</a>

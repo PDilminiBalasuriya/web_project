@@ -1,7 +1,7 @@
 <?php
 require_once '../../config.php'; 
 require_once '../auth.php'; 
-adminOnly();
+
 
 // 1. GET THE ID FROM URL
 $id = isset($_GET['id']) ? mysqli_real_escape_string($conn, $_GET['id']) : null;
@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <header class="header-section">
         <nav class="nav-left">
-            <a href="admin.php" class="nav-link"><span class="icon">&#8592;</span> BACK TO LIST</a>
+            <a href="events.php" class="nav-link"><span class="icon">&#8592;</span> BACK TO LIST</a>
         </nav>
         <div class="nav-center"><h2>USER DETAILS</h2></div>
         <div class="nav-right">
@@ -159,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="view-actions">
                 <button type="submit" class="submit-btn edit-btn">Save Changes</button>
-                <button type="button" class="submit-btn close-btn" onclick="location.href='admin.php'">Close</button>
+                <button type="button" class="submit-btn close-btn" onclick="location.href='../admin.php'">Close</button>
             </div>
         </form>
     </div>

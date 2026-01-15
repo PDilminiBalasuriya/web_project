@@ -1,7 +1,7 @@
 <?php
 require_once '../../config.php'; 
 require_once '../auth.php'; 
-adminOnly();
+
 
 if (isset($_GET['id'])) {
     $user_id = mysqli_real_escape_string($conn, $_GET['id']);
@@ -32,7 +32,7 @@ if (isset($_GET['id'])) {
 
     <header class="header-section">
         <nav class="nav-left">
-            <a href="admin.php" class="nav-link"><span class="icon">&#8592;</span> BACK TO LIST</a>
+            <a href="events.php" class="nav-link"><span class="icon">&#8592;</span> BACK TO LIST</a>
         </nav>
         <div class="nav-center"><h2>USER DETAILS</h2></div>
         <div class="nav-right">
@@ -64,7 +64,7 @@ if (isset($_GET['id'])) {
                 <div style="display: flex; gap: 10px; margin-top: 20px;">
                     <div class="view-actions">
                         <button class="submit-btn edit-btn" onclick="location.href='updateUser.php'">Edit User</button>
-                        <button class="submit-btn close-btn" onclick="location.href='admin.php'" >Close</button>
+                        <button class="submit-btn close-btn" onclick="location.href='../admin.php'" >Close</button>
                     </div>
 
                     

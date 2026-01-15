@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "INSERT INTO users (username, password, Role_Id) VALUES ('$username', '$hashed_pass', '$role_id')";
         
         if (mysqli_query($conn, $sql)) {
-            echo "<script>alert('User Created Successfully!'); window.location.href='../admin.php';</script>";
+            echo "<script>alert('User Created Successfully!'); window.location.href='admin.php';</script>";
         }
     } else {
         // This will trigger if the HTML 'name' attribute is missing/wrong
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Fetch roles for the dropdown using $conn
+// Fetch roles for the dropdown using db
 $role_query = "SELECT role_id, role_name FROM roles ORDER BY role_name ASC";
 $role_result = mysqli_query($conn, $role_query);
 
@@ -67,7 +67,7 @@ if ($role_result && mysqli_num_rows($role_result) > 0) {
 
     <header class="header-section">
         <nav class="nav-left">
-            <a href="../admin.php" class="nav-link">
+            <a href="admin.php" class="nav-link">
                 <span class="icon">&#8592;</span> BACK TO LIST
             </a>
         </nav>
@@ -110,7 +110,7 @@ if ($role_result && mysqli_num_rows($role_result) > 0) {
                 </div>
                 <div class="button-row">
                     <button type="submit" class="submit-btn">Create an User</button>
-                    <button type="button" class="submit-btn close-btn" onclick="location.href='../admin.php'" >Close</button>
+                    <button type="button" class="submit-btn close-btn" onclick="location.href='admin.php'" >Close</button>
                 </div>
             </form>
         </div>
