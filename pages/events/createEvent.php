@@ -8,51 +8,53 @@ eventManagerOnly();
 
 // Check if the form was submitted via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Safety check: verify both keys are present
-    if (isset($_POST['password']) && isset($_POST['confirm_password'])) {
-        
-        $username = mysqli_real_escape_string($conn, $_POST['username']);
-        $role_id  = mysqli_real_escape_string($conn, $_POST['role_id']);
-        $password = $_POST['password'];
-        $confirm  = $_POST['confirm_password'];
 
-        // --- CHARACTER VALIDATIONS ---
-        if (strlen($username) < 4) {
-            echo "<script>alert('Username must be at least 4 characters long!'); window.history.back();</script>";
-            exit();
-        }
-        elseif (strlen($password) < 8) {
-            echo "<script>alert('Password must be at least 8 characters long!'); window.history.back();</script>";
-            exit();
-        }
-        elseif ($password !== $confirm) {
-            echo "<script>alert('Passwords do not match!'); window.history.back();</script>";
-            exit();
-        }
+    $code      = mysqli_real_escape_string($conn, $_POST['code']);
+    $title     = mysqli_real_escape_string($conn, $_POST['title']);
+    $type_id   = mysqli_real_escape_string($conn, $_POST['Type_Id']);
+    $venue     = mysqli_real_escape_string($conn, $_POST['venue']);
+    $city      = mysqli_real_escape_string($conn, $_POST['city']);
+    $date      = mysqli_real_escape_string($conn, $_POST['date']);
+    $starttime = mysqli_real_escape_string($conn, $_POST['starttime']);
+    $endtime   = mysqli_real_escape_string($conn, $_POST['endtime']);
+    $status_id = mysqli_real_escape_string($conn, $_POST['Status_Id']);
 
-        // ... Password convert to hash and insert into database
-        $hashed_pass = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "INSERT INTO users (username, password, Role_Id) VALUES ('$username', '$hashed_pass', '$role_id')";
-        
-        if (mysqli_query($conn, $sql)) {
-            echo "<script>alert('User Created Successfully!'); window.location.href='admin.php';</script>";
-        }
+
+    // Insert query (MATCHES YOUR TABLE)
+    $sql = "INSERT INTO event 
+        (Code, Title, Type_Id, Venue, City, Date, Start_Time, End_Time, Status_Id)
+        VALUES
+        ('$code', '$title', '$type_id', '$venue', '$city', '$date', '$starttime', '$endtime', '$status_id')";
+
+    if (mysqli_query($conn, $sql)) {
+        echo "<script>alert('Event created successfully'); window.location='events.php';</script>";
     } else {
-        // This will trigger if the HTML 'name' attribute is missing/wrong
-        echo "Error: Form data missing. Check your input names.";
+        echo "Database Error: " . mysqli_error($conn);
     }
 }
 
-// Fetch roles for the dropdown using db
-$role_query = "SELECT role_id, role_name FROM roles ORDER BY role_name ASC";
-$role_result = mysqli_query($conn, $role_query);
+// Fetch event types for the dropdown using db
+$etype_query = "SELECT Type_Id,Type FROM event_type ORDER BY Type ASC";
+$etype_result = mysqli_query($conn, $etype_query);
 
-$roles_list = array();
-if ($role_result && mysqli_num_rows($role_result) > 0) {
-    while ($row = mysqli_fetch_assoc($role_result)) {
-        $roles_list[] = $row;
+$etype_list = array();
+if ($etype_result && mysqli_num_rows($etype_result) > 0) {
+    while ($row = mysqli_fetch_assoc($etype_result)) {
+        $etype_list[] = $row;
     }
 }
+
+// Fetch event statuses for the dropdown using db
+$estatus_query = "SELECT Status_Id, Status_Type FROM event_status ORDER BY Status_Type ASC";
+$estatus_result = mysqli_query($conn, $estatus_query);
+
+$estatus_list = array();
+if ($estatus_result && mysqli_num_rows($estatus_result) > 0) {
+    while ($row = mysqli_fetch_assoc($estatus_result)) {
+        $estatus_list[] = $row;
+    }
+}
+
 ?>
 
 
@@ -102,32 +104,27 @@ if ($role_result && mysqli_num_rows($role_result) > 0) {
 
                 <div class="input-group">
                     <label>Date</label>
-                    <input type="text" name="date" id="date" placeholder="Enter Event Date" required>
+                    <input type="date" name="date" id="date" placeholder="Enter Event Date" required>
                 </div>
 
                 <div class="input-group">
                     <label>Start Time</label>
-                    <input type="text" name="username" id="username" placeholder="Min 4 characters" required>
+                    <input type="time" name="starttime" id="starttime" placeholder="Enter Event Start Time" required>
                 </div>
 
                 <div class="input-group">
                     <label>End Time</label>
-                    <input type="text" name="username" id="username" placeholder="Min 4 characters" required>
+                    <input type="time" name="endtime" id="endtime" placeholder="Enter Event End Time" required>
                 </div>
 
                 <div class="input-group">
                     <label>Assign Event Type</label>
-                    <input type="text" name="username" id="username" placeholder="Min 4 characters" required>
-                </div>
-
-                <div class="input-group">
-                    <label>Assign Role</label>
-                    <select name="role_id" class="drop-down-active" required>
-                        <option value="" disabled selected>-- Select a Role --</option>
+                    <select name="Type_Id" class="drop-down-active" required>
+                        <option value="" disabled selected>-- Select a Event Type --</option>
                         <?php 
-                        if (!empty($roles_list)) {
-                            foreach ($roles_list as $role) {
-                                echo '<option value="' . $role['role_id'] . '">' . htmlspecialchars($role['role_name']) . '</option>';
+                        if (!empty($etype_list)) {
+                            foreach ($etype_list as $type) {
+                                echo '<option value="' . $type['Type_Id'] . '">' . htmlspecialchars($type['Type']) . '</option>';
                             }
                         }
                         ?>
@@ -135,13 +132,13 @@ if ($role_result && mysqli_num_rows($role_result) > 0) {
                 </div>
 
                 <div class="input-group">
-                    <label>Assign Role</label>
-                    <select name="role_id" class="drop-down-active" required>
-                        <option value="" disabled selected>-- Select a Role --</option>
+                    <label>Assign Event Staus</label>
+                    <select name="Status_Id" class="drop-down-active" required>
+                        <option value="" disabled selected>-- Select a Event Status --</option>
                         <?php 
-                        if (!empty($roles_list)) {
-                            foreach ($roles_list as $role) {
-                                echo '<option value="' . $role['role_id'] . '">' . htmlspecialchars($role['role_name']) . '</option>';
+                        if (!empty($estatus_list)) {
+                            foreach ($estatus_list as $status) {
+                                echo '<option value="' . $status['Status_Id'] . '">' . htmlspecialchars($status['Status_Type']) . '</option>';
                             }
                         }
                         ?>
@@ -160,17 +157,16 @@ if ($role_result && mysqli_num_rows($role_result) > 0) {
     <script>
 
 <script>
-    document.querySelector('form').onsubmit = function(e) {
-        var username = document.getElementById('username').value;
-       
-        // Username validation
-        if (username.length < 4) {
-            alert("Username must be at least 4 characters long!");
-            e.preventDefault();
-            return false;
-        }
-    };
-    </script>
+document.querySelector('form').onsubmit = function(e) {
+    let code = document.getElementById('code').value;
+
+    if (code.length < 10) {
+        alert("Event code must be exactly 10 characters");
+        e.preventDefault();
+    }
+};
+</script>
+
 </script>
 
 </body>

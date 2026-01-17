@@ -57,7 +57,7 @@ if (!$result) {
     </div>
 </header>
 
- <!-- Create Event Button & EventType and EventStatus Buttons -->
+ <!-- Create ticket and ticket category Buttons -->
 <div class="action-section">
     <div class="button-wrapper">
         <button class="reg-btn" onclick="location.href='createTicketCategory.php'">Create New Ticket Category</button>
@@ -93,9 +93,9 @@ if (!$result) {
                 <td><?php echo isset($ticket['price']) ? htmlspecialchars($ticket['price']) : ''; ?></td>
                
                             <td>
-                                <button class="view-btn" onclick="location.href='viewTicket.php?id=<?php echo $event['Id']; ?>'">View</button>
-                                <button class="upt-btn" onclick="location.href='updateTicket.php?id=<?php echo $event['Id']; ?>'">Update</button>
-                                <button class="del-btn" onclick="if(confirm('Are you sure you want to delete this Ticket?')) location.href='deleteTicket.php?id=<?php echo $event['Id']; ?>'">Delete</button>
+                                <button class="view-btn" onclick="location.href='viewTicket.php?Id=<?php echo $ticket['Id']; ?>'">View</button>
+                                <button class="upt-btn" onclick="location.href='updateTicket.php?Id=<?php echo $ticket['Id']; ?>'">Update</button>
+                                <button class="del-btn" onclick="if(confirm('Are you sure you want to delete this Ticket?')) location.href='deleteTicket.php?Id=<?php echo $ticket['Id']; ?>'">Delete</button>
                             </td>
                         </tr>
                     <?php endwhile; ?>
