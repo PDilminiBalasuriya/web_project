@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         if (mysqli_query($conn, $sql)) {
-            echo "<script>alert('User Updated Successfully!\\n\\n$change_log'); window.location.href='../admin.php';</script>";
+            echo "<script>alert('User Updated Successfully!\\n\\n$change_log'); window.location.href='admin.php';</script>";
             exit();
         } else {
             $error = "Database Error: " . mysqli_error($conn);

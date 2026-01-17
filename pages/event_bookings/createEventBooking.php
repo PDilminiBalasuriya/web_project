@@ -49,7 +49,7 @@ $statuses_result = mysqli_query($conn, "SELECT id, status_name FROM booking_stat
 
     <header class="header-section">
         <nav class="nav-left">
-            <a href="events.php" class="nav-link">
+            <a href="eventBookings.php" class="nav-link">
                 <span class="icon">&#8592;</span> BACK TO LIST
             </a>
         </nav>
@@ -108,7 +108,7 @@ $statuses_result = mysqli_query($conn, "SELECT id, status_name FROM booking_stat
 
                 <div class="button-row">
                     <button type="submit" class="submit-btn">Create Booking</button>
-                    <button type="button" class="submit-btn close-btn" onclick="location.href='../admin.php'">Close</button>
+                    <button type="button" class="submit-btn close-btn" onclick="location.href='eventBookings.php'">Close</button>
                 </div>
             </form>
         </div>

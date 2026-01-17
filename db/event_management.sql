@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 05, 2026 at 03:06 PM
+-- Generation Time: Jan 15, 2026 at 10:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -72,8 +72,8 @@ CREATE TABLE `event` (
   `Venue` varchar(255) NOT NULL,
   `City` varchar(255) NOT NULL,
   `Date` date NOT NULL,
-  `Start Time` time NOT NULL,
-  `End Time` time NOT NULL,
+  `Start_Time` time NOT NULL,
+  `End_Time` time NOT NULL,
   `Status_Id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -81,7 +81,7 @@ CREATE TABLE `event` (
 -- Dumping data for table `event`
 --
 
-INSERT INTO `event` (`Id`, `Code`, `Title`, `Type_Id`, `Venue`, `City`, `Date`, `Start Time`, `End Time`, `Status_Id`) VALUES
+INSERT INTO `event` (`Id`, `Code`, `Title`, `Type_Id`, `Venue`, `City`, `Date`, `Start_Time`, `End_Time`, `Status_Id`) VALUES
 (1, 'TESTEVENT1', 'Ahankara Nagare', 3, 'Port City', 'Colombo', '2026-02-13', '19:00:00', '00:00:00', 1);
 
 -- --------------------------------------------------------
@@ -95,7 +95,8 @@ CREATE TABLE `event_bookings` (
   `Code` char(10) NOT NULL,
   `event_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `ticket_id` int(11) NOT NULL
+  `ticket_id` int(11) NOT NULL,
+  `booking_status_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -106,14 +107,14 @@ CREATE TABLE `event_bookings` (
 
 CREATE TABLE `event_status` (
   `Status_Id` int(10) NOT NULL,
-  `Status Type` varchar(50) NOT NULL
+  `Status_Type` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `event_status`
 --
 
-INSERT INTO `event_status` (`Status_Id`, `Status Type`) VALUES
+INSERT INTO `event_status` (`Status_Id`, `Status_Type`) VALUES
 (1, 'Active'),
 (2, 'Inactive'),
 (3, 'PostPone'),
@@ -147,20 +148,23 @@ INSERT INTO `event_type` (`Type_Id`, `Type`) VALUES
 --
 
 CREATE TABLE `roles` (
-  `Role_Id` int(10) NOT NULL,
-  `Role Name` varchar(50) NOT NULL
+  `role_id` int(10) NOT NULL,
+  `role_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`Role_Id`, `Role Name`) VALUES
+INSERT INTO `roles` (`role_id`, `role_name`) VALUES
 (1, 'Admin'),
 (2, 'Event Manager'),
 (3, 'Event Organizer'),
 (4, 'Event Staff'),
-(5, 'Customer');
+(5, 'Customer'),
+(7, 'Test User Role Name'),
+(8, 'Test User Role Name 1'),
+(9, 'Test User Role Name 3');
 
 -- --------------------------------------------------------
 
@@ -170,7 +174,7 @@ INSERT INTO `roles` (`Role_Id`, `Role Name`) VALUES
 
 CREATE TABLE `ticket` (
   `ticket_id` int(10) NOT NULL,
-  `code` char(10) NOT NULL,
+  `ticket_code` char(10) NOT NULL,
   `category_id` int(11) NOT NULL,
   `event_id` int(11) NOT NULL,
   `Price` decimal(10,2) NOT NULL
@@ -194,17 +198,17 @@ CREATE TABLE `ticket_category` (
 --
 
 CREATE TABLE `users` (
-  `Id` int(10) NOT NULL,
-  `Name` varchar(50) NOT NULL,
-  `Password` varchar(255) NOT NULL,
-  `Role_Id` int(10) NOT NULL
+  `id` int(10) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`Id`, `Name`, `Password`, `Role_Id`) VALUES
+INSERT INTO `users` (`id`, `username`, `password`, `role_id`) VALUES
 (1, 'Sandani', 'Abc@123456789', 1),
 (2, 'Dilmi', 'Abc@123456789', 1),
 (3, 'Kasun', 'Abc@123456789', 2),
@@ -215,7 +219,10 @@ INSERT INTO `users` (`Id`, `Name`, `Password`, `Role_Id`) VALUES
 (8, 'Dinithi', 'Xyz@123456789', 5),
 (9, 'Kavindya', 'Xyz@123456789', 5),
 (10, 'Yasith', 'Xyz@123456789', 5),
-(11, 'Joseph', 'Abc@123456789', 4);
+(11, 'Joseph', 'Abc@123456789', 4),
+(12, 'Sandamali', '$2y$10$Q1Yt6k3xD.9qkVGAqUjoEu0PJ0qNxOMCXk5z6cj/MGRN2Ew1q5uvm', 5),
+(13, 'Anura', '$2y$10$T8BJyWeflhN648c4eKUCHOIQpuWegrZTAxxXv6XEstCJ9FYctEG02', 5),
+(14, 'Pravini', '$2y$10$5fXKqxBMjN9UkRK45laVie3MPMyjTxP0ngYAezjSlsiWdX/edkGKi', 8);
 
 --
 -- Indexes for dumped tables
@@ -225,7 +232,7 @@ INSERT INTO `users` (`Id`, `Name`, `Password`, `Role_Id`) VALUES
 -- Indexes for table `booking_status`
 --
 ALTER TABLE `booking_status`
-  ADD KEY `booking_status_id_fk` (`booking_status_id`);
+  ADD PRIMARY KEY (`booking_status_id`);
 
 --
 -- Indexes for table `customer`
@@ -248,7 +255,8 @@ ALTER TABLE `event_bookings`
   ADD PRIMARY KEY (`Id`),
   ADD KEY `event_id_fk` (`event_id`),
   ADD KEY `customer_id_fk` (`customer_id`),
-  ADD KEY `ticket_id_fk` (`ticket_id`);
+  ADD KEY `ticket_id_fk` (`ticket_id`),
+  ADD KEY `booking_status_id_fk` (`booking_status_id`) USING BTREE;
 
 --
 -- Indexes for table `event_status`
@@ -266,7 +274,7 @@ ALTER TABLE `event_type`
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
-  ADD PRIMARY KEY (`Role_Id`);
+  ADD PRIMARY KEY (`role_id`);
 
 --
 -- Indexes for table `ticket`
@@ -286,8 +294,8 @@ ALTER TABLE `ticket_category`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`Id`),
-  ADD KEY `role_id_fk` (`Role_Id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `role_id_fk` (`role_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -333,7 +341,7 @@ ALTER TABLE `event_type`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `Role_Id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `role_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `ticket`
@@ -351,18 +359,24 @@ ALTER TABLE `ticket_category`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `Id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `booking_status`
+--
+ALTER TABLE `booking_status`
+  ADD CONSTRAINT `booking_status_ibfk_1` FOREIGN KEY (`booking_status_id`) REFERENCES `event_bookings` (`booking_status_id`);
+
+--
 -- Constraints for table `event`
 --
 ALTER TABLE `event`
-  ADD CONSTRAINT `event_ibfk_1` FOREIGN KEY (`Status_Id`) REFERENCES `event_status` (`status_id`),
-  ADD CONSTRAINT `event_ibfk_2` FOREIGN KEY (`Type_Id`) REFERENCES `event_type` (`type_id`);
+  ADD CONSTRAINT `event_ibfk_1` FOREIGN KEY (`Status_Id`) REFERENCES `event_status` (`Status_Id`),
+  ADD CONSTRAINT `event_ibfk_2` FOREIGN KEY (`Type_Id`) REFERENCES `event_type` (`Type_Id`);
 
 --
 -- Constraints for table `roles`
@@ -374,7 +388,7 @@ ALTER TABLE `roles`
 -- Constraints for table `ticket`
 --
 ALTER TABLE `ticket`
-  ADD CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `ticket_category` (`Category_Id`),
+  ADD CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `ticket_category` (`category_id`),
   ADD CONSTRAINT `ticket_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `event` (`Id`);
 
 --

@@ -32,7 +32,7 @@ if (isset($_GET['id'])) {
 
     <header class="header-section">
         <nav class="nav-left">
-            <a href="admin.php" class="nav-link"><span class="icon">&#8592;</span> BACK TO LIST</a>
+            <a href="../admin.php" class="nav-link"><span class="icon">&#8592;</span> BACK TO LIST</a>
         </nav>
         <div class="nav-center"><h2>USER DETAILS</h2></div>
         <div class="nav-right">
