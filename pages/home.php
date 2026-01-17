@@ -55,8 +55,8 @@ body {font-size:16px;}
 
     <!-- EVENT MANAGER -->
   <?php if ($role === 'event manager') { ?>
-    <a href="event_bookings/events.php" class="w3-bar-item w3-button w3-hover-white">Events</a>
-    <a href="tickets.php" class="w3-bar-item w3-button w3-hover-white">Tickets</a>
+    <a href="events/events.php" class="w3-bar-item w3-button w3-hover-white">Events</a>
+    <a href="tickets/tickets.php" class="w3-bar-item w3-button w3-hover-white">Tickets</a>
     <a href="schedule.php" class="w3-bar-item w3-button w3-hover-white">Schedule</a>
     <a href="schedule.php" class="w3-bar-item w3-button w3-hover-white">Booking</a>
        <a href="schedule.php" class="w3-bar-item w3-button w3-hover-white">Customer</a>
